@@ -90,7 +90,7 @@ module OmniAuth
 
       def fetch_jwks
         uri = URI.parse('https://appleid.apple.com/auth/keys')
-        response = Net::HTTP.get_response(uri)
+        response = HTTP.get(uri)
         JSON.parse(response.body, symbolize_names: true)
       end
 
