@@ -25,7 +25,7 @@ module OmniAuth
           email: email,
           first_name: first_name,
           last_name: last_name,
-          name: (first_name || last_name) ? [first_name, last_name].join(' ') : email,
+          name: (first_name || last_name) ? [first_name, last_name].join(' ') : '',
         )
       end
 
@@ -58,6 +58,10 @@ module OmniAuth
           return redirect url
         end
         super
+      end
+     
+      def request_phase
+        redirect client.auth_code.authorize_url({:redirect_uri => callback_url}.merge(authorize_params)).gsub(/\+/, '%20')
       end
 
       private
